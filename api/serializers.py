@@ -1,12 +1,33 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from api.models import Book, Bookcase, Genre, Reader, Review, Loan
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class ReaderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'groups')
+        model = Reader
+        fields = ('url', 'username', 'email', 'friends')
 
-class GroupSerialzer(serializers.HyperlinkedModelSerializer):
+class BookSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Group
-        fields = ('url', 'name')
+        model = Book
+        fields = ('title', 'author', 'date_published', 'genre', 'edition')
+
+class BookcaseSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Bookcase
+        fields = ('reader', 'books')
+
+class GenreSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Genre
+        fields = ('name', 'description')
+
+class LoanSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Loan
+        fields = ('book', 'loaner', 'borrower', 'date_loaned', 'expected_return_date', 'date_returned')
+
+class ReviewSerializer(serializers.HyperlinkedModelSerializer):
+      class Meta:
+          model = Review
+          fields = ('date', 'title', 'reader', 'body', 'stars', 'book', )
